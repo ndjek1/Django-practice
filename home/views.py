@@ -81,6 +81,7 @@ def edit_patient_record(request, patient_id):
     patient = get_object_or_404(Patient, pk=patient_id)
     if request.method == 'POST':
         patient.name = request.POST['name']
+        patient.alergies = request.POST['alergies']
         patient.blood_type = request.POST['blood_type']
         patient.alergies = request.POST['alergies']
         patient.spouse = request.POST['spouse']

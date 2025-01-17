@@ -24,13 +24,13 @@
                                     {% endif %}
                                 </div>
 
-                                <!-- Age Field -->
-                                <div class="mb-3 col-md-3">
-                                    <label for="id_age" class="form-label">Age <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control {% if form.age.errors %}is-invalid{% endif %}" id="id_age" name="age" min="0" required>
-                                    {% if form.age.errors %}
+                                 <!-- Date of Birth Field -->
+                                 <div class="mb-3 col-md-3">
+                                    <label for="id_date_of_birth" class="form-label">Date of Birth </label>
+                                    <input type="date" class="form-control {% if form.date_of_birth.errors %}is-invalid{% endif %}" id="id_date_of_birth" name="date_of_birth">
+                                    {% if form.date_of_birth.errors %}
                                         <div class="invalid-feedback">
-                                             {{ form.age.errors|join:", " }}
+                                             {{ form.date_of_birth.errors|join:", " }}
                                         </div>
                                     {% endif %}
                                 </div>
