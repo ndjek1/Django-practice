@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}Edit Patient Record{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+             <div class="col-md-10">
+                <div class="card shadow-sm">
+                    <div class="card-header text-white" style="background-color: #343a40;">
+                        <h4 class="text-center mb-0">Edit Patient Record</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" action="{% url 'edit_patient_record' patient.id %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <!-- Name Field -->
+                                <div class="mb-3 col-md-6">
+                                    <label for="id_name" class="form-label">Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="id_name" name="name" value="{{ patient.name }}" required>
+                                      {% if form.name.errors %}
+                                           <div class="invalid-feedback">
+                                                {{ form.name.errors|join:", " }}
+                                           </div>
+                                       {% endif %}
+                                </div>
+
+                                <!-- Blood Type Field -->
+                                <div class="mb-3 col-md-3">
+                                   <label for="id_blood_type" class="form-label">Blood Type <span class="text-danger">*</span></label>
+                                       <select class="form-select {% if form.blood_type.errors %}is-invalid{% endif %}" id="id_blood_type" name="blood_type" required>
+                                        <option value="" selected disabled>Select Blood Type</option>
+                                        <option value="A+" {% if patient.blood_type == 'A+' %}selected{% endif %}>A+</option>
+                                        <option value="A-" {% if patient.blood_type == 'A-' %}selected{% endif %}>A-</option>
+                                         <option value="B+" {% if patient.blood_type == 'B+' %}selected{% endif %}>B+</option>
+                                        <option value="B-" {% if patient.blood_type == 'B-' %}selected{% endif %}>B-</option>
+                                        <option value="AB+" {% if patient.blood_type == 'AB+' %}selected{% endif %}>AB+</option>
+                                        <option value="AB-" {% if patient.blood_type == 'AB-' %}selected{% endif %}>AB-</option>
+                                        <option value="O+" {% if patient.blood_type == 'O+' %}selected{% endif %}>O+</option>
+                                         <option value="O-" {% if patient.blood_type == 'O-' %}selected{% endif %}>O-</option>
+                                     </select>
+                                      {% if form.blood_type.errors %}
+                                        <div class="invalid-feedback">
+                                              {{ form.blood_type.errors|join:", " }}
+                                        </div>
+                                     {% endif %}
+                                 </div>
+                                   <!-- Last Hospitalization Date Field -->
+                                <div class="mb-3 col-md-3">
+                                    <label for="id_last_hospitalisation" class="form-label">Last Hospitalization Date </label>
+                                    <input type="date" class="form-control {% if form.last_hospitalisation.errors %}is-invalid{% endif %}" id="id_last_hospitalisation" name="last_hospitalisation" value="{{patient.last_hospitalisation|date:'Y-m-d'}}" >
+                                      {% if form.last_hospitalisation.errors %}
+                                        <div class="invalid-feedback">
+                                              {{ form.last_hospitalisation.errors|join:", " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Allergies Field -->
+                                <div class="mb-3 col-md-6">
+                                    <label for="id_alergies" class="form-label">Allergies</label>
+                                    <input type="text" class="form-control {% if form.alergies.errors %}is-invalid{% endif %}" id="id_allergies" name="alergies" value="{{ patient.alergies }}" >
+                                      {% if form.alergies.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ form.alergies.errors|join:", " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <!-- Spouse Field -->
+                                 <div class="mb-3 col-md-6">
+                                  <label for="id_spouse" class="form-label">Spouse</label>
+                                  <input type="text" class="form-control {% if form.spouse.errors %}is-invalid{% endif %}" id="id_spouse" name="spouse" value="{{patient.spouse}}">
+                                     {% if form.spouse.errors %}
+                                       <div class="invalid-feedback">
+                                            {{ form.spouse.errors|join:", " }}
+                                       </div>
+                                     {% endif %}
+                                 </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Update Record</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

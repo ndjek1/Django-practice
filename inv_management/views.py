@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import InventoryItem, Category
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q # type: ignore
-from .forms import CategoryForm
+from .forms import CategoryForm, InventoryItemForm
 from django.db import IntegrityError
 
 @login_required
@@ -26,39 +26,30 @@ def inventory_list(request):
 
 @login_required
 def add_inventory_item(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        category_id = request.POST['category']
-        quantity = request.POST['quantity']
-        unit_price = request.POST['unit_price']
-        description = request.POST['description']
+  if request.method == 'POST':
+      form = InventoryItemForm(request.POST)
+      if form.is_valid():
+           form.save()
+           return redirect('inv_management:inventory_list')
 
-        category = get_object_or_404(Category, pk=category_id)
+  else:
+     form = InventoryItemForm()
 
-        InventoryItem.objects.create(
-            name=name,
-            category=category,
-            quantity=quantity,
-            unit_price=unit_price,
-            description=description
-        )
-        return redirect('inv_management:inventory_list')
-    categories = Category.objects.all()
-    return render(request, 'add_inventory_item.html', {'categories': categories})
+  categories = Category.objects.all()
+  return render(request, 'inventory/add_inventory_item.html', {'categories': categories, 'form': form})
 
 @login_required
 def edit_inventory_item(request, item_id):
     item = get_object_or_404(InventoryItem, pk=item_id)
     if request.method == 'POST':
-        item.name = request.POST['name']
-        item.category = get_object_or_404(Category, pk=request.POST['category'])
-        item.quantity = request.POST['quantity']
-        item.unit_price = request.POST['unit_price']
-        item.description = request.POST['description']
-        item.save()
-        return redirect('inv_management:inventory_list')
+        form = InventoryItemForm(request.POST, instance=item) # Bind the form to the model object
+        if form.is_valid():
+            form.save()
+            return redirect('inv_management:inventory_list')
+    else:
+      form = InventoryItemForm(instance=item) # Create a new form bound to the model instance
     categories = Category.objects.all()
-    return render(request, 'edit_inventory_item.html', {'item': item, 'categories': categories})
+    return render(request, 'edit_inventory_item.html', {'item': item, 'categories': categories, 'form': form})
 
 
 @login_required
