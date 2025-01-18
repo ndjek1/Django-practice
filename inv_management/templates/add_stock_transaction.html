@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Add stock{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header text-white" style="background-color: #343a40;">
+                    <h4 class="text-center mb-0">Add new {{type}} for item {{item.name}}</h4>
+                </div>
+                <div class="card-body p-4">
+                  {% if type == 'entry' %}
+                    <form method="post" action="{% url 'inv_management:entry' item.id %}">
+                  {% elif type == 'outing' %}
+                     <form method="post" action="{% url 'inv_management:outing' item.id %}">
+                 {% endif %}
+                        {% csrf_token %}
+                        <!-- Quantity Field -->
+                        <div class="mb-3">
+                            <label for="id_quantity" class="form-label">Quantity <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control {% if form.quantity.errors %}is-invalid{% endif %}" id="id_quantity" name="quantity" min="0" required>
+                            {% if form.quantity.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.quantity.errors|join:", " }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <!-- Notes Field -->
+                        <div class="mb-3">
+                            <label for="id_notes" class="form-label">Notes</label>
+                             <textarea class="form-control" id="id_notes" name="notes"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Add {{type}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
