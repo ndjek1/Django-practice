@@ -2,13 +2,26 @@
     "version": 2,
     "builds": [
       {
-        "src": "manage.py",
+        "src": "hospital/wsgi.py",
         "use": "@vercel/python",
-        "config": { "runtime": "python3.12" }
+        "config": {"maxLambdaSize": "15mb", "runtime": "python3.12"}
+      },
+      {
+        "src": "build_files.sh",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "staticfiles"
+        }
       }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "manage.py" }
+      {
+        "src": "/(.*)",
+        "dest": "hospital/wsgi.py"
+      },
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      }
     ]
   }
-  
