@@ -73,7 +73,7 @@ def doctor_register(request):
             blood_type=blood_type,
             specialization=specialization
         )
-        return redirect('success_page')  # Replace 'success_page' with your success URL
+        return redirect('login')  # Replace 'success_page' with your success URL
     return render(request, 'doctor_register.html')
 
 def edit_patient_record(request, patient_id):
