@@ -50,31 +50,30 @@ def patients_list(request):
         }
     return render(request, 'patients_list.html', context)
 
+# def doctor_register(request):
+#     if request.method == 'POST':
+#         name = request.POST['name']
+#         gender = request.POST['gender']
+#         blood_type = request.POST['blood_type']
+#         specialization = request.POST['specialization']
+#         username = request.POST['username']
+#         password = request.POST['password']
 
-def doctor_register(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        gender = request.POST['gender']
-        blood_type = request.POST['blood_type']
-        specialization = request.POST['specialization']
-        username = request.POST['username']
-        password = request.POST['password']
+#         # Hash the password
+#         hashed_password = make_password(password)
 
-        # Hash the password
-        hashed_password = make_password(password)
+#         # Create a new user for login
+#         user = User.objects.create(username=username, password=hashed_password)
 
-        # Create a new user for login
-        user = User.objects.create(username=username, password=hashed_password)
-
-        # Create a new doctor with the same name and other data
-        Doctor.objects.create(
-            name=name,
-            gender=gender,
-            blood_type=blood_type,
-            specialization=specialization
-        )
-        return redirect('login')  # Replace 'success_page' with your success URL
-    return render(request, 'doctor_register.html')
+#         # Create a new doctor with the same name and other data
+#         Doctor.objects.create(
+#             name=name,
+#             gender=gender,
+#             blood_type=blood_type,
+#             specialization=specialization
+#         )
+#         return redirect('login')  # Replace 'success_page' with your success URL
+#     return render(request, 'doctor_register.html')
 
 def edit_patient_record(request, patient_id):
  
