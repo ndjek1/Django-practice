@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-@cdny-^#^od^h5j0g1c!rt&6lh-yv2p_16vcioe0*ax^y$a9zv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -86,11 +86,11 @@ load_dotenv()  # Load environment variables
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hospitaldb_l3fk',  # Extracted database name
-        'USER': 'ndjek',  # Extracted username
-        'PASSWORD': 'xBgB1KJ3wethFearYjlOymd9Sj5KTbp4',  # Extracted password
-        'HOST': 'dpg-cvdfk5jtq21c73ffog00-a.oregon-postgres.render.com',  # Extracted host
-        'PORT': '5432',  # Default PostgreSQL port
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
